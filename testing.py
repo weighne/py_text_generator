@@ -4,21 +4,22 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
 from keras.utils import np_utils
 
-print("hello :)")
-
 with open("/Users/chris/github/py_text_generator/Sample_Texts/KJV_Revelations.txt") as text:
     text=text.read().lower()
     #print(text)
 
+    # mapping characters to numbers in a dictionary so that they can be referenced faster later
     characters = sorted(list(set(text)))
-
     n_to_char = {n:char for n, char in enumerate(characters)}
     char_to_n = {char:n for n, char in enumerate(characters)}
-
+    # X is the training array, Y is the target array
+    # X will contain a set of characters and Y will contain the prediction for the following character(s)
+    # example: X = [h,e,l,l] Y = [o]
     X = []
     Y = []
 
     length = len(text)
+    # seq_length is how many characters will be 
     seq_length = 100
 
     for i in range(0,length-seq_length,1):
